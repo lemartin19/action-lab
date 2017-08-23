@@ -1,0 +1,25 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /images
+  static_dir: images
+- url: /scripts
+  static_dir: scripts
+- url: /sounds
+  static_dir: sounds
+- url: /stylesheets
+  static_dir: stylesheets
+  application_readable: true
+- url: /templates
+  static_dir: templates
+  application_readable: true
+- url: /.*
+  script: action-lab.application
+
+libraries:
+- name: jinja2
+  version: 2.6
+- name: webapp2
+  version: latest

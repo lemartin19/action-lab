@@ -1,0 +1,16 @@
+{% extends "templates/_game.html" %}
+
+{% block directions %}
+	<p>Click to throw the ball. Click on the mouse that has caught the cheese. Click again to reset.</p>
+	<p>You have 15 chances to guess. Each correct guess gives you a point, which will be tallied in the bottom left hand corner of the screen.</p>
+{% endblock %}
+
+{% block gamefield %}
+	<div id="game_field" onclick="checkAction(event)"><div id="play">
+		<img src="../images/cheeseball.jpg" class="selectDisable" id="ball"></img>
+		<img src="../images/house.png" class="selectDisable" id="house"></img>
+		<img src="../images/green.gif" class="mouse selectDisable" id="green"></img>
+		<img src="../images/red.gif" class="mouse selectDisable" id="red"></img>
+		<img src="../images/blue.gif" class="mouse selectDisable" id="blue"></img>
+	</div></div>
+{% endblock %}

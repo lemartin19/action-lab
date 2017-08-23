@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="stylesheet" href="../stylesheets/_base.css">
+		<link rel="stylesheet" href="../stylesheets/game{{game}}.css">
+		<script type="text/javascript" src="../scripts/game{{game}}.js"></script>
+		<title>Action Lab Game {{game}}</title>
+	</head>
+
+	<body>
+		<h1>Action Lab</h1>
+		{% block directions %}
+		{% endblock %}
+		{% block gamefield %}
+		{% endblock %}
+		<script type='text/javascript'>
+			declareVariables();
+			setup();
+		</script>
+		<p style="position: fixed; top: 90%;">
+			<button onclick="reset()">Reset</button>&emsp;
+			<button onclick="downloadData()">Download Data</button>&emsp;
+			<a href='/home'>Return to Home</a>
+		</p>
+	</body>
+</html>

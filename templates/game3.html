@@ -1,0 +1,16 @@
+{% extends "templates/_game.html" %}
+{% block directions %}
+	<p>Move the mouse up and down to control the paddle. Click to throw the ball. Your paddle must be inside the blue box to throw the ball.</p>
+	<p>You have 15 chances to get the ball into the croc's mouth. Aim for the tip of the tongue. Your points will be tallied in the bottom left hand corner of the screen.</p>
+{% endblock %}
+
+{% block gamefield %}
+	<div id="game_field" onmousemove="drawPaddle(event)" onclick="throwBall()">
+		<div id="starting_box"></div>
+		<div id="paddle"></div>
+		<div class="point" id="ball">
+			<div class="circle"></div>
+		</div>
+		<img src="../images/croc.gif" id="croc"></img>
+	</div>
+{% endblock %}

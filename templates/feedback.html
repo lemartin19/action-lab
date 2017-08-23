@@ -1,0 +1,12 @@
+{% extends "templates/_base.html" %}
+{% block bodycontent %}
+    <h3>{{title}}</h3>
+    <form method="post">
+		Name: 
+		<input type="text" name="name"><br><br>
+        Bugs? Comments? Questions?<br>
+		<textarea name="feedback"></textarea><br>
+		<input type="submit"></input>
+    </form>
+	{{message}}
+{% endblock %}

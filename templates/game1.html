@@ -1,0 +1,16 @@
+{% extends "templates/_game.html" %}
+
+{% block directions %}
+	<p>Move your mouse up and down to control the net. Click to throw the ball. Your net must be inside the blue box to throw the ball.</p>
+	<p>You have 15 chances to catch the ball with your net. Your points will be tallied in the bottom left hand corner of the screen.
+{% endblock %}
+
+{% block gamefield %}
+	<div id="game_field" onmousemove="drawNet(event)" onclick="throwBall()">
+		<div id="starting_box"></div>
+		<img src="../images/net.png" id="net"></img>
+		<div class="point" id="ball">
+			<div class="circle"></div>			
+		</div>
+	</div>
+{% endblock %}

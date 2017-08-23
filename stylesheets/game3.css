@@ -1,0 +1,18 @@
+#paddle {
+	position: absolute;
+	background: yellow;
+	width: 65px;
+	height: 15px;
+	left: 650px;
+}
+#croc {
+	position: absolute;
+	width: 325px;
+	left: 975px;
+	top: 0px;
+	-webkit-transform: rotate(320deg);
+	-moz-transform: rotate(320deg);
+	-o-transform: rotate(320deg);
+	-ms-transform: rotate(320deg);
+	transform: rotate(320deg);
+}

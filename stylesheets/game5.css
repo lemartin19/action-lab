@@ -1,0 +1,24 @@
+#mouse {
+      position: absolute;
+      width: 60px;
+      top: 200px;
+      left: 655px;
+      opacity: 0;
+      -webkit-transform: rotate(270deg);
+      -moz-transform: rotate(270deg);
+      -o-transform: rotate(270deg);
+      -ms-transform: rotate(270deg);
+      transform: rotate(270deg);
+}
+#ball {
+      top: 212px;
+      left: 725px;
+}
+#cheese_cover {
+      width: 30px;
+      height: 30px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 25px;
+      background: black;
+}

@@ -1,0 +1,69 @@
+body {
+	background: black;
+	color: yellow;
+	text-align: center;
+}
+h1 {
+	font-family: sans-serif;
+	font-size: 36px;
+}
+a {
+	color: green;
+}
+table {
+	margin: 0 auto;
+	width: 25px;
+}
+button {
+	display: inline-block;
+	height: 20px;
+}
+.error {
+	color: red;
+}
+.login-link {
+	color: yellow;
+}
+.selectDisable {
+	-webkit-user-select: none;
+	-khtml-user-select: none; 
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.point {
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	top: 95%;
+}
+.circle {
+	background: red;
+	border-radius: 50%;
+	width: 100%;
+	padding-bottom: 100%;
+}
+#game_field {
+	position: fixed;
+	border: solid white;
+	width: 1300px;
+	height: 500px;
+}
+#starting_box {
+	position: absolute;
+	border: solid blue 3px;
+	width: 70px;
+	height: 50px;
+	left: 645px;
+	bottom: 0px;
+}
+#net {
+	position: absolute;
+	width: 65px;
+	left: 650px;
+}
+#ball {
+	position: absolute;
+	width: 25px;
+	height: 25px;
+}

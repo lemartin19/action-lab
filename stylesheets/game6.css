@@ -1,0 +1,13 @@
+#house {
+	position: absolute;
+	height: 350px;
+	right: 585px;
+	bottom: 0px;
+}
+#window {
+	position: absolute;
+	top: 370px;
+	left: 450px;
+	height: 60px;
+	width: 60px;
+}

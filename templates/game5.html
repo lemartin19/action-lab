@@ -1,0 +1,16 @@
+{% extends "templates/_game.html" %}
+
+{% block directions %}
+	<p>Click when ready for the round. Keep basket within blue box until mouse appears.</p>
+	<p>Once the mouse appears, move as quickly as possible to catch it in your net.</p>
+{% endblock %}
+
+{% block gamefield %}
+	<div id="game_field" onmousemove="checkMotion(event)" onclick="checkMouseClick(event)"><div id="play">
+		<div id="starting_box" class="selectDisable"></div>
+		<img src="../images/net.png" id="net"></img>
+		<img src="../images/mouse.png" id="mouse"></img>
+		<img src="../images/cheeseball.jpg" class="selectDisable" id="ball"></img>
+		<div id="cheese_cover"></div>
+	</div></div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "templates/_base.html" %}
+{% block bodycontent %}
+    <h3>{{title}}</h3>
+    <form method="post">
+		<table>
+			<tr>
+				<td class="label">Password: </td>
+				<td><input type="password" name="admin"></td>
+				<td class="error">{{error}}</td>
+			</td>
+		</table>
+		<input type="submit">
+	</form>
+	{{message}}
+{% endblock %}

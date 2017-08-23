@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="stylesheet" href="../stylesheets/_base.css">
+		{% block headcontent %}
+		{% endblock %}
+		<title>{{title}}</title>
+	</head>
+
+	<body>
+		<h1>Action Lab</h1>
+		{% if user %}
+			<a class="login-link" href="/home">home </a>| 
+			<a class="login-link" href="/about">about</a>| 
+			<a class="login-link" href="/logout/user">user logout </a>| 
+			{% if admin %}
+				<a class="login-link" href="/add">add user account </a>| 
+				<a class="login-link" href="/view_feedback">view feedback</a>| 
+				<a class="login-link" href="/logout/admin">admin logout</a>
+			{% else %}
+				<a class="login-link" href="/give_feedback">give feedback</a>| 
+				<a class="login-link" href="/admin">admin login</a>
+			{% endif %}
+		{% elif admin %}
+			<a class="login-link" href="/home">home </a>| 
+			<a class="login-link" href="/about">about</a>|
+			<a class="login-link" href="/user">user login </a>| 
+			<a class="login-link" href="/add">add user account </a>| 
+			<a class="login-link" href="/view_feedback">view feedback</a>| 
+			<a class="login-link" href="/logout/admin">admin logout </a>
+		{% else %}
+			<a class="login-link" href="/about">about</a>| 
+			<a class="login-link" href="/user">user login</a>|
+			<a class="login-link" href="/admin">admin login</a>
+		{% endif %}
+		{% block bodycontent %}
+		{% endblock %}
+	</body>
+</html>

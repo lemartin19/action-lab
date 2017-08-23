@@ -1,0 +1,14 @@
+{% extends "templates/_game.html" %}
+
+{% block directions %}
+	<p>Click when ready for the round. Once the ball is thrown, </p>
+	<p>Once the mouse appears, move as quickly as possible to catch it in your net.</p>
+{% endblock %}
+
+{% block gamefield %}
+	<div id="game_field" onclick="checkClick(event)"><div id="play">
+		<div class="point" class="selectDisable" id="ball"><div class="circle"></div></div>
+		<img src="../images/house2.png" class="selectDisable" id="house"></img>
+		<div id="window"></div>
+	</div></div>
+{% endblock %}

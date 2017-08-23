@@ -1,0 +1,20 @@
+.mouse {
+	position: absolute;
+	width: 91px;
+	left: 715px;
+}
+#house {
+	position: absolute;
+	height: 350px;
+	right: 585px;
+	bottom: 0px;
+}
+#green {
+	top: 245px;
+}
+#red {
+	top: 325px;
+}
+#blue {
+	top: 405px;
+}

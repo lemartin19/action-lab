@@ -1,0 +1,16 @@
+{% extends "templates/_base.html" %}
+{% block bodycontent %}
+	<h3>Game Finished</h3>
+	<p>
+		{% if points <= 5 %}
+			Good effort, you'll do even better next time!<br>
+			You got {{points}} out of 15 points.
+		{% elif points <= 10 %}
+			Nice!<br>
+			You got {{points}} out of 15 points.
+		{% else %}
+			Awesome job!<br>
+			You got {{points}} out of 15 points.
+		{% endif %}
+	</p>
+{% endblock %}
