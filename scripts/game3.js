@@ -21,11 +21,11 @@ function declareVariables() {
 	ball = doc.getElementById("ball");
 	paddle = doc.getElementById("paddle");
 	field_dimensions = doc.getElementById("game_field").getBoundingClientRect();
-	crocBounds = doc.getElementById("croc").getBoundingClientRect();
+	crocBounds = doc.getElementById("croc1").getBoundingClientRect();
 	doc.getElementById("starting_box").style.height = paddle.getBoundingClientRect().height+5+'px';
 	start_top = doc.getElementById("starting_box").getBoundingClientRect().top;
 
-	xv = [4.7,4.9,5.1];
+	xv = [3.4,3.6,3.8];
 	yv = [-3.7,-3.5,-3.3];
 	yacc = 0.04;
 	setup();
@@ -35,15 +35,16 @@ function declareVariables() {
 //animates the ball's motion and checks location in comparison to paddle
 function frame() {
 	paddleBounds = paddle.getBoundingClientRect();			//get paddle location
-	checkX = field_dimensions.left + xpos + ball.offsetWidth/2;			//get ball location (center)
-	checkY = field_dimensions.top + ypos + ball.offsetHeight/2;
+	checkX = xpos + ball.offsetWidth/2;			//get ball location (center)
+	checkY = ypos + ball.offsetHeight/2;
 
 	mousevel = ((paddleBounds.top + paddleBounds.height/2)-mouseY)/5; 	//calculate change in mouse position from previous frame
 
 									//add ball center and paddle center string to give location
 	csvContent += checkX.toString() + ", " + checkY.toString() + ", " + (paddleBounds.left+paddleBounds.width/2).toString() + ", " + (paddleBounds.top+paddleBounds.height/2).toString() + "\n";// + ", " + yvel + "\n"; 
 
-	if (checkY > field_dimensions.bottom || checkX > field_dimensions.width) {//if the ball is outside the game field
+	
+	if (checkY > field_dimensions.height || checkY < 0 || checkX > field_dimensions.width) {//if the ball is outside the game field
 		fail.currentTime = 0;
 		fail.play();
 		setup();
@@ -51,14 +52,17 @@ function frame() {
 	} else {
 		if (checkX>paddleBounds.left &&	//if ball is inside paddle bounds
 			checkX<paddleBounds.right &&
-			checkY<paddleBounds.bottom &&
-			checkY>paddleBounds.top && (yvel > 0)) {
+			checkY<paddleBounds.bottom-200 &&
+			checkY>paddleBounds.top-200 && (yvel > 0)) {
 				yvel = -.65*yvel+.75*mousevel;			//make it bounce off paddle with added velocity
 		}
-		else if (checkX>field_dimensions.width*.7631 &&		//if in crocs mouth
-				checkX<field_dimensions.width*.8184 &&
-				ballY_old>(4.36347*ballX_old/field_dimensions.width-3.11397)*field_dimensions.height &&
-				checkY<(4.36347*checkX/field_dimensions.width-3.11397)*field_dimensions.height) {
+		else if (checkX>990 &&		//if in crocs mouth
+				checkX<1050 &&
+				ballY_old>(1.75*ballX_old-1597.5) &&
+				checkY<(1.75*checkX-1597.5)) {
+					console.log("ball, croc");
+					console.log(checkY);
+					console.log(1.75*checkX-1597.5);
 					score(); 				//draw point
 					success.currentTime = 0;
 					success.play();				//play success sound
@@ -79,6 +83,9 @@ function frame() {
 
 //draw's paddle every time the mouse is moved
 function drawPaddle(e) {
+	/*console.log("y, x");
+	console.log(e.clientY);
+	console.log(e.clientX);*/
 	if(!mouseY) {
 		mouseY = e.clientY;
 	}
@@ -131,14 +138,19 @@ function score() {
 	var newElement = document.createElement('div');	//create new div to show points on field
 	newElement.className = 'point trials';
 	newElement.id = 'trial' + trial;
-	newElement.style.left = 5 + (ball.getBoundingClientRect().width)*points + 'px';
+	newElement.style.left = 3 + (3 + ball.getBoundingClientRect().width)*points + 'px';
+	newElement.style.top = 3 + 'px';
 	newElementChild = doc.createElement('div');
 	newElementChild.className = 'circle';
 	newElement.appendChild(newElementChild);
 	doc.getElementById('game_field').appendChild(newElement);
 	points++;						//add to number of points
+	croc1.style.opacity = 0;
+	croc2.style.opacity = 1;
+	await sleep(500);
+	croc1.style.opacity = 1;
+	croc2.style.opacity = 0;
 }
-
 //resets game
 function reset() {
 	var paras = doc.getElementsByClassName('trials');
@@ -160,4 +172,8 @@ function downloadData() {
 	link.setAttribute("download", "game3_data.csv");
 	document.body.appendChild(link); // Required for FF
 	link.click();
+}
+
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
