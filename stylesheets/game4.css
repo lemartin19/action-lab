@@ -1,20 +1,36 @@
 .mouse {
 	position: absolute;
 	width: 91px;
-	left: 715px;
+	left: 650px;
 }
 #house {
 	position: absolute;
-	height: 350px;
-	right: 585px;
+	height: 400px;
+	right: 650px;
 	bottom: 0px;
 }
-#green {
+#red {
 	top: 245px;
 }
-#red {
+#green {
 	top: 325px;
 }
 #blue {
 	top: 405px;
+}
+
+#push {
+  position: absolute;
+  background-color: orange;
+  width: 150px;
+  height: 100px;
+  top: 200px;
+  left: 900px;
+}
+
+#push p {
+  font: bold 24px arial, sans-serif;
+  color: black;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
