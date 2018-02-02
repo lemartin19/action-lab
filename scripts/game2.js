@@ -24,8 +24,8 @@ function declareVariables() {
 	field_dimensions = doc.getElementById("game_field").getBoundingClientRect();
 	start_top = doc.getElementById("starting_box").getBoundingClientRect().top;
 
-	xv = [4.7,4.9,5.1];
-	yv = [-3.7,-3.5,-3.3];
+  xv = [3.7,3.9,4.1];
+	yv = [-4.7,-4.5,-4.3];
 	yacc = 0.04;
 	setup();
 }
@@ -100,8 +100,8 @@ function setup() {
 		id = null;					//allow ball to be thrown again
 	}
 	
-	xpos = 5; 					//resets ball position
-	ypos = field_dimensions.height/2;
+	xpos = 10; 					//resets ball position
+	ypos = 7*field_dimensions.height/8;
 	xvel = xv[Math.floor(Math.random()*3)];		//reset velocity
 	yvel = yv[Math.floor(Math.random()*3)];
 	wall_width = wall_state[Math.floor(Math.random()*3)];
