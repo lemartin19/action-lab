@@ -8,7 +8,13 @@
 {% block gamefield %}
 	<div id="game_field" onclick="checkClick(event)"><div id="play">
 		<div class="point" class="selectDisable" id="ball"><div class="circle"></div></div>
-		<img src="../images/house2.png" class="selectDisable" id="house"></img>
+		<div id="house">
+			<div id="roof">
+			<div class="wall" id="leftwall"></div>
+			<div class="wall" id="rightwall"></div>
+			<div class="wall" id="topwall"></div>
+			<div class="wall" id="bottomwall"></div>
+		</div>
 		<div id="window"></div>
 	</div></div>
 {% endblock %}
