@@ -16,14 +16,16 @@ var success = new Audio("../sounds/success.mp3");
 var fail = new Audio("../sounds/fail.mp3");
 var date = 0, curDate = 1000;
 
+var RANDOMTABLE = [0,0,0,2,2,2,2,1,2,1,0,1,0,0,0,1,2,1,1,2,2,2,2,0,0,0,2,0,1,1,0,2,1,0,1,1,2,2,1,2,0,0,0,1,2,0,2,0,2,2,1,1,2,0,1,2,2,2,1,1,1,2,2,2,1,2,0,1,0,1,2,1,0,1,0,1,0,0,1,1];
+
 function declareVariables() {
 	ball = doc.getElementById("ball");
 	net = doc.getElementById("net");
 	field_dimensions = doc.getElementById("game_field").getBoundingClientRect();
 	start_top = doc.getElementById("starting_box").getBoundingClientRect().top;
 
-	xv = [4.7,4.9,5.1];
-	yv = [-3.7,-3.5,-3.3];
+	xv = [3.7,3.9,4.1];
+	yv = [-4.7,-4.5,-4.3];
 	yacc = 0.04;
 	setup();
 }
@@ -99,10 +101,11 @@ function setup() {
 		id = null;					//allow ball to be thrown again
 	}
 
-	xpos = 5; 					//resets ball position
-	ypos = field_dimensions.height/2;
-	xvel = xv[Math.floor(Math.random()*3)];		//reset velocity
-	yvel = yv[Math.floor(Math.random()*3)];
+	xpos = 10; 					//resets ball position
+	ypos = 7*field_dimensions.height/8;
+	date = new Date();
+	xvel = xv[RANDOMTABLE[date % RANDOMTABLE.length]];		//reset velocity
+	yvel = yv[RANDOMTABLE[date % RANDOMTABLE.length]];
 	ball.style.top = ypos + 'px'; 			//redraw ball at start
 	ball.style.left = xpos + 'px';
 	date = new Date();
