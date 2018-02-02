@@ -3,6 +3,7 @@
 	<head>
 		<link rel="stylesheet" href="../stylesheets/_base.css">
 		<link rel="stylesheet" href="../stylesheets/game{{game}}.css">
+    <script src="../scripts/jquery-3.2.1.js"></script>
 		<script type="text/javascript" src="../scripts/game{{game}}.js"></script>
 		<title>Action Lab Game {{game}}</title>
 	</head>
@@ -17,7 +18,7 @@
 			declareVariables();
 			setup();
 		</script>
-		<p style="position: fixed; top: 90%;">
+		<p style="position: fixed; top: 700px;">
 			<button onclick="reset()">Reset</button>&emsp;
 			<button onclick="downloadData()">Download Data</button>&emsp;
 			<a href='/home'>Return to Home</a>
