@@ -1,3 +1,24 @@
+.croc {
+	position: absolute;
+	width: 225px;
+	height: 125px;
+	left: 1050px;
+	top: 50px;
+	-webkit-transform: rotate(330deg);
+	-moz-transform: rotate(330deg);
+	-o-transform: rotate(330deg);
+	-ms-transform: rotate(330deg);
+	transform: rotate(330deg);
+}
+#croc1 {
+	opacity: 1;
+}
+#croc2 {
+	opacity: 0;
+}
+#croc3 {
+	opacity: 0;
+}
 #paddle {
 	position: absolute;
 	background: yellow;
@@ -5,14 +26,6 @@
 	height: 15px;
 	left: 650px;
 }
-#croc {
-	position: absolute;
-	width: 325px;
-	left: 975px;
-	top: 0px;
-	-webkit-transform: rotate(320deg);
-	-moz-transform: rotate(320deg);
-	-o-transform: rotate(320deg);
-	-ms-transform: rotate(320deg);
-	transform: rotate(320deg);
+#starting_box {
+	height: 20px;
 }
