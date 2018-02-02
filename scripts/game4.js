@@ -9,7 +9,7 @@ var ball, field_dimensions, house_dimensions;
 
 var mice = [], mouse;
 var yv;
-var xpos, ypox, xve, yvel, yacc;
+var xpos, ypox, xvel, yvel, yacc;
 
 var csvContent = "data:text/csv;charset=utf-8,"; //string to become output csv
 
@@ -22,9 +22,9 @@ function declareVariables()  {
 	ball = doc.getElementById('ball');
 	field_dimensions = doc.getElementById('game_field').getBoundingClientRect();
 	mice = doc.getElementsByClassName('mouse');				//get all "mice" elements
-	yv = [-0.00665*field_dimensions.height,-0.0055*field_dimensions.height,-0.00436*field_dimensions.height];
-	xvel = .3+0.0037*field_dimensions.width;
-	yacc = 0.000080428954409*field_dimensions.height;
+	yv = [-5.57,-5.12,-4.67];
+	xvel = 3.6;
+	yacc = 0.05;
 	setup();
 }
 
@@ -35,8 +35,8 @@ function frame() {
 		id = null;
 		thrown = true;
 
-		xpos = mice[mouse].getBoundingClientRect().left+mice[mouse].getBoundingClientRect().width/2-ball.getBoundingClientRect().width/2;	//move ball behind mouse head
-		ypos = mice[mouse].getBoundingClientRect().top+mice[mouse].getBoundingClientRect().height/2-ball.getBoundingClientRect().height/2;
+		xpos = mice[mouse].getBoundingClientRect().left+mice[mouse].getBoundingClientRect().width/2-ball.getBoundingClientRect().width/2-field_dimensions.left;	//move ball behind mouse head
+		ypos = mice[mouse].getBoundingClientRect().top+mice[mouse].getBoundingClientRect().height/2-ball.getBoundingClientRect().height/2-field_dimensions.top;
 		ball.style.top = ypos + 'px';
 		ball.style.left = xpos +'px';
 	}
@@ -63,7 +63,7 @@ function checkAction(e) {
 			guess = false;
 		}
 		else if (is_setup) {
-			csvContent += "mouse:, " + mouse + ", ";
+			csvContent += "mouse: " + mouse + ", ";
 			house_dimensions = doc.getElementById("house").getBoundingClientRect();
 			id = setInterval(frame,5);
 			is_setup = false;
@@ -87,15 +87,33 @@ function checkAction(e) {
 }
 
 //check which button the user clicked in
-function checkButton(x, y) {
-	for (var i = 0; i < mice.length; i++) {
-		if (x < mice[i].getBoundingClientRect().right && x > mice[i].getBoundingClientRect().left &&
-		    y < mice[i].getBoundingClientRect().bottom && y > mice[i].getBoundingClientRect().top)	{
-			csvContent += "guess:, " + i + "\n";
-			return i;
-		}
-	}
-	return mice.length;
+function checkButton(e) {
+  if (!id && !is_setup && !guess) {
+    var x = e.clientX;
+    var y = e.clientY;
+    console.log("x: " + x + ", y: " + y);
+    for (var i = 0; i < mice.length; i++) {
+      console.log("checking mouse " + i);
+      console.log("right: " + mice[i].getBoundingClientRect().right + ", left: " +mice[i].getBoundingClientRect().left);
+      if (x < mice[i].getBoundingClientRect().right && x > mice[i].getBoundingClientRect().left &&
+          y < mice[i].getBoundingClientRect().bottom && y > mice[i].getBoundingClientRect().top)	{
+            console.log("inside mouse");
+        csvContent += "guess:, " + i + "\n";
+        if (i == mouse) {
+          seeMice(0.0);
+          score();
+          success.currentTime = 0;
+          success.play();
+        }
+        else {
+          seeMice(0.0);
+          fail.currentTime = 0;
+          fail.play();
+        }
+      }
+    }
+    guess = true;
+  }
 }
 
 //turn mice semi-transparent
@@ -111,8 +129,8 @@ function setup() {
 	thrown = false;
 
 	mouse = Math.floor(Math.random()*3);	
-	xpos = 15; 					//resets ball position
-	ypos = 2*field_dimensions.height/3+field_dimensions.top;
+	xpos = 10; 					//resets ball position
+	ypos = 7*field_dimensions.height/8;
 	yvel = yv[mouse];
     ball.style.top = ypos + 'px'; 			//redraw ball at start
     ball.style.left = xpos + 'px';
@@ -125,11 +143,11 @@ function setup() {
 //adds a point to scoreboard
 function score() {
 	var newElement = document.createElement('img');	//create new div to show points on field
-	newElement.src = '../images/cheeseball.jpg';
-	newElement.className = 'point remove_reset';
+	newElement.src = '../images/slide1.jpg';
+	newElement.className = 'remove_reset cheese';
 	newElement.id = 'trial' + trial;
-	newElement.style.left = (100*ball.getBoundingClientRect().width/field_dimensions.width)*points + '%';
-	doc.getElementById('play').appendChild(newElement);
+	newElement.style.left = 3 + (3 + ball.getBoundingClientRect().width)*points + 'px';
+	doc.getElementById('game_field').appendChild(newElement);
 	points++;						//add to number of points
 }
 
