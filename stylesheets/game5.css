@@ -1,3 +1,6 @@
+.remove_reset {
+	position: absolute;
+}
 #mouse {
       position: absolute;
       width: 60px;
@@ -10,15 +13,12 @@
       -ms-transform: rotate(270deg);
       transform: rotate(270deg);
 }
-#ball {
-      top: 212px;
-      left: 725px;
+#net {
+	height: 47px;
 }
-#cheese_cover {
-      width: 30px;
-      height: 30px;
-      -webkit-border-radius: 25px;
-      -moz-border-radius: 25px;
-      border-radius: 25px;
-      background: black;
+#cheese {
+	position: absolute;
+	height: 50px;
+        top: 212px;
+        left: 725px;
 }
