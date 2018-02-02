@@ -11,8 +11,14 @@ a {
 	color: green;
 }
 table {
+	white-space: nowrap;
+	overflow: hidden;
 	margin: 0 auto;
 	width: 25px;
+	border-collapse: separate;
+}
+td {
+	padding-bottom: 10px;
 }
 button {
 	display: inline-block;
@@ -33,9 +39,8 @@ button {
 }
 .point {
 	position: absolute;
-	width: 25px;
-	height: 25px;
-	top: 95%;
+	width: 30px;
+	height: 30px;
 }
 .circle {
 	background: red;
@@ -43,27 +48,28 @@ button {
 	width: 100%;
 	padding-bottom: 100%;
 }
+.cheese {
+	position: absolute;
+	width: 60px;
+}
 #game_field {
 	position: fixed;
 	border: solid white;
+	top: 200px;
+	left: 10px;
 	width: 1300px;
 	height: 500px;
 }
 #starting_box {
 	position: absolute;
-	border: solid blue 3px;
-	width: 70px;
-	height: 50px;
-	left: 645px;
+	border: solid blue 5px;
+	width: 76px;
+	height: 55px;
+	left: 644px;
 	bottom: 0px;
 }
 #net {
 	position: absolute;
-	width: 65px;
+	width: 70px;
 	left: 650px;
-}
-#ball {
-	position: absolute;
-	width: 25px;
-	height: 25px;
 }
