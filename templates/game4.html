@@ -6,11 +6,12 @@
 {% endblock %}
 
 {% block gamefield %}
-	<div id="game_field" onclick="checkAction(event)"><div id="play">
-		<img src="../images/cheeseball.jpg" class="selectDisable" id="ball"></img>
+	<div id="game_field"><div id="play">
+		<img src="../images/slide1.jpg" class="selectDisable cheese" id="ball"></img>
 		<img src="../images/house.png" class="selectDisable" id="house"></img>
-		<img src="../images/green.gif" class="mouse selectDisable" id="green"></img>
-		<img src="../images/red.gif" class="mouse selectDisable" id="red"></img>
-		<img src="../images/blue.gif" class="mouse selectDisable" id="blue"></img>
+		<img src="../images/red.gif" class="mouse selectDisable" id="red" onclick="checkButton(event)"></img>
+		<img src="../images/green.gif" class="mouse selectDisable" id="green" onclick="checkButton(event)"></img>
+		<img src="../images/blue.gif" class="mouse selectDisable" id="blue"onclick="checkButton(event)"></img>
+    <div id="push" onclick="checkAction(event)"><p>throw ball</p></div>
 	</div></div>
 {% endblock %}
