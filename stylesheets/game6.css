@@ -1,13 +1,49 @@
+.wall {
+	position: absolute;
+	background-color: orange;
+}
+#roof {
+	height: 0px;
+	width: 0px;
+	border-left: 150px solid transparent;
+	border-right: 150px solid transparent;
+	border-bottom: 150px solid white;
+}
 #house {
 	position: absolute;
-	height: 350px;
-	right: 585px;
+	height: 375px;
+	width: 300px;
+	left: 550px;
 	bottom: 0px;
 }
 #window {
 	position: absolute;
-	top: 370px;
-	left: 450px;
-	height: 60px;
-	width: 60px;
+	height: 70px;
+	width: 70px;
+	bottom: 85px;
+	left: 115px;
+}
+#leftwall {
+	height: 225px;
+	width:115px;
+	left: 0px;
+	bottom: 0px;
+}
+#rightwall {
+	height: 225px;
+	width: 115px;
+	right: 0px;
+	bottom: 0px;
+}
+#topwall {
+	height: 70px;
+	width: 300px;
+	left: 0px;
+	bottom: 155px;
+}
+#bottomwall {
+	height: 85px;
+	width: 300px;
+	left: 0px;
+	bottom: 0px;
 }
