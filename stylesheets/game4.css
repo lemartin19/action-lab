@@ -3,6 +3,14 @@
 	width: 91px;
 	left: 650px;
 }
+
+#tree {
+  position: absolute;
+  height: 500px;
+  left: 125px;
+  bottom: 0px;
+}
+
 #house {
 	position: absolute;
 	height: 400px;

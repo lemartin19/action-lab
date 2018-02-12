@@ -59,6 +59,7 @@ function checkAction(e) {
 				link.click();
 			}
 			setup();
+      doc.getElementById('push').getElementsByTagName("p")[0].innerHTML = "throw ball";
 			trial++;
 			guess = false;
 		}
@@ -110,6 +111,7 @@ function checkButton(e) {
           fail.currentTime = 0;
           fail.play();
         }
+        doc.getElementById('push').getElementsByTagName("p")[0].innerHTML = "reset";
       }
     }
     guess = true;

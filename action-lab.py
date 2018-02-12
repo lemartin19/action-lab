@@ -43,17 +43,12 @@ class User(db.Model):
 
 #Checks if user is an admin
 def check_admin(admin):
-  if admin == return_hash(ADMIN_PASS):
-    return True
-  return False
+  return admin == return_hash(ADMIN_PASS)
 
 #Checks if user is signed in to play games
 def check_user(this_user):
   try: 
-    if User.get_by_id(int(this_user.split('|')[0])) and (return_hash(this_user.split('|')[0]) == this_user.split('|')[1]):
-      return True
-    else:
-      return False
+    return User.get_by_id(int(this_user.split('|')[0])) and (return_hash(this_user.split('|')[0]) == this_user.split('|')[1])
   except:
     return False
 
@@ -200,6 +195,27 @@ class AdminLogin(webapp2.RequestHandler):
     template = JINJA_ENVIRONMENT.get_template('templates/admin.html')
     self.response.write(template.render(title="Admin Login", user=self.request.cookies.get("user"), admin=self.request.cookies.get("admin"), **template_values))
     
+class Data(webapp2.RequestHandler):
+  def get(self):
+    logging.info("**** Data Get ****")
+    if not (check_admin(self.request.cookies.get("admin"))):
+      self.response.headers.add_header('Set-Cookie','error="You must login as an admin in order to continue to this site."; Path=/')
+      self.response.headers.add_header('Set-Cookie', 'admin=""; Path=/')
+      self.response.headers.add_header('Set-Cookie', 'user=""; Path=/')
+      self.redirect('/error')
+    template = JINJA_ENVIRONMENT.get_template('templates/data.html')
+    self.response.write(template.render(title="Data", user=self.request.cookies.get("user"), admin=self.request.cookies.get("admin")))
+  
+  def post(self):
+    logging.info("**** Data Post ****")
+    if not (check_admin(self.request.cookies.get("admin"))):
+      self.response.headers.add_header('Set-Cookie','error="You must login as an admin in order to continue to this site."; Path=/')
+      self.response.headers.add_header('Set-Cookie', 'admin=""; Path=/')
+      self.response.headers.add_header('Set-Cookie', 'user=""; Path=/')
+      self.redirect('/error')
+    template = JINJA_ENVIRONMENT.get_template('templates/data.html')
+    self.response.write(template.render(title="Data", user=self.request.cookies.get("user"), admin=self.request.cookies.get("admin")))
+    
 #Default home page to redirect to other pages
 class Default(webapp2.RequestHandler):
   def get(self):
@@ -212,7 +228,7 @@ class Default(webapp2.RequestHandler):
 #Something isnt right
 class Error(webapp2.RequestHandler):
   def get(self):
-    global values
+    #global values
     logging.info("**** Error Get ****")
     template = JINJA_ENVIRONMENT.get_template('templates/error.html')
     self.response.write(template.render(title="Error", user=self.request.cookies.get("user"), admin=self.request.cookies.get("admin"), message=self.request.cookies.get('error')))
@@ -325,7 +341,6 @@ class UserLogin(webapp2.RequestHandler):
     logging.info("**** UserLogin Post ****")
     global values
     update_values()
-    
     values['first_name'] = escape_html(self.request.get("first_name"))
     values['last_name'] = escape_html(self.request.get("last_name"))
     values['dob'] = escape_html(self.request.get("dob"))
@@ -348,6 +363,7 @@ application = webapp2.WSGIApplication([
   ('/about', About),
   ('/add', AddUser),
   ('/admin', AdminLogin),
+  ('/data', Data),
   ('/error', Error),
   ('/files', Files),
   ('/game([1-6])', Game),
