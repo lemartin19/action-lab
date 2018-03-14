@@ -10,10 +10,8 @@ var start_top;
 var xv, yv;
 var xpos, ypos, xvel, yvel, yacc;
 
-var csvContent = "data:text/csv;charset=utf-8,"; //string to become output csv
+var xml = "<query><data>data:text/plain;charset=utf-8,"; //string to become output csv
 
-var success = new Audio("../sounds/success.mp3");
-var fail = new Audio("../sounds/fail.mp3");
 var date = 0, curDate = 1000;
 
 var RANDOMTABLE = [0,0,0,2,2,2,2,1,2,1,0,1,0,0,0,1,2,1,1,2,2,2,2,0,0,0,2,0,1,1,0,2,1,0,1,1,2,2,1,2,0,0,0,1,2,0,2,0,2,2,1,1,2,0,1,2,2,2,1,1,1,2,2,2,1,2,0,1,0,1,2,1,0,1,0,1,0,0,1,1];
@@ -37,10 +35,10 @@ function frame() {
 	checkY = field_dimensions.top + ypos + ball.offsetHeight/2;
 
 												//add ball center and net center string to give location
-	csvContent += checkX.toString() + ", " + checkY.toString() + ", " + (netBounds.right-netBounds.width/2).toString() + ", " + (netBounds.bottom-netBounds.height/2).toString() + "\n"; 
+	xml += checkX.toString() + ", " + checkY.toString() + ", " + (netBounds.right-netBounds.width/2).toString() + ", " + (netBounds.bottom-netBounds.height/2).toString() + "\n"; 
 
-	console.log(ypos + " " + field_dimensions.bottom);
 	if (checkY > field_dimensions.bottom) { 		//if the ball is outside the game field
+    var fail = new Audio("../sounds/fail" + Math.ceil(Math.random() * 3) + "/mp3");
 		fail.currentTime = 0;
 		fail.play();					//play fail sound
 		setup();
@@ -50,6 +48,7 @@ function frame() {
 			checkX>netBounds.left &&
 			checkY>netBounds.top && above) {
 			score();					//mark score
+      var success = new Audio("../sounds/success" + Math.ceil(Math.random() * 3) + ".mp3");
 			success.currentTime = 0;
 			success.play();
 			setup();
@@ -83,15 +82,16 @@ function throwBall() {
 		trial++;
 		id = setInterval(frame, 5);
 
-		csvContent += "xvel:, " + xvel + "\nyvel:, " + yvel + "\nyacc:, " + yacc + "\n";
-		csvContent += "Ball X, Ball Y, Mouse X, Mouse Y\n";
+		xml += "xvel:, " + xvel + "\nyvel:, " + yvel + "\nyacc:, " + yacc + "\n";
+		xml += "Ball X, Ball Y, Mouse X, Mouse Y\n";
 	}
 	else if (trial >= 15) {
-		var link = doc.createElement('a');
-		link.setAttribute('href', '/game_finished' + points);
-		document.body.appendChild(link); // Required for FF
-		link.click();
-	}
+    downloadData();
+    var link = doc.createElement('a');
+    link.setAttribute('href', '/game_finished' + points);
+    document.body.appendChild(link); // Required for FF
+    link.click();
+  }
 }
 
 //resets ball velocities and position, stops animation
@@ -109,7 +109,6 @@ function setup() {
 	ball.style.top = ypos + 'px'; 			//redraw ball at start
 	ball.style.left = xpos + 'px';
 	date = new Date();
-	csvContent += "\n";
 }
 
 //when user catches ball, adds to scoreboard
@@ -128,22 +127,22 @@ function score() {
 
 //resets game
 function reset() {
+  downloadData();
 	var paras = doc.getElementsByClassName('trials');
 	while(paras[0]) {
 		paras[0].parentNode.removeChild(paras[0]);
 	}
 	setup();
-	csvContent = "data:text/csv;charset=utf-8,";
+	xml = "<query><data>";
 	trial = 0;
 	points = 0;
 }
 
 //download csv file
 function downloadData() {
-	var encodedUri = encodeURI(csvContent);
-	var link = doc.createElement("a");
-	link.setAttribute("href", encodedUri);
-	link.setAttribute("download", "game1_data.csv");
-	document.body.appendChild(link); // Required for FF
-	link.click();
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST","/data");
+  xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+  xml += "</data><game>2</game><trials>" + trial + "</trials><points>" + points + "</points></query>";
+  xmlhttp.send(xml);
 }
