@@ -3,18 +3,49 @@
 	width: 91px;
 	left: 650px;
 }
-
-#tree {
-  position: absolute;
-  height: 500px;
-  left: 125px;
-  bottom: 0px;
+.wall {
+	position: absolute;
+	background-color: #8B4513;
 }
-
+#roof {
+	position: relative;
+	height: 0px;
+	width: 0px;
+	bottom: 50px;
+	left: -25px;
+	border-left: 200px solid transparent;
+	border-right: 200px solid transparent;
+	border-bottom: 200px solid #B22222;
+}
 #house {
 	position: absolute;
-	height: 400px;
-	right: 650px;
+	height: 425px;
+	width: 350px;
+	left: 275px;
+	bottom: 0px;
+}
+#leftwall {
+	height:275px;
+	width:115px;
+	left: 0px;
+	bottom: 0px;
+}
+#rightwall {
+	height: 275px;
+	width: 115px;
+	right: 0px;
+	bottom: 0px;
+}
+#topwall {
+	height: 100px;
+	width: 300px;
+	left: 0px;
+	top: 150px;
+}
+#bottomwall {
+	height: 100px;
+	width: 300px;
+	left: 0px;
 	bottom: 0px;
 }
 #red {
