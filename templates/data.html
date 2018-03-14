@@ -1,6 +1,27 @@
 {% extends "templates/_base.html" %}
 {% block bodycontent %}
+  <script>
+  
+  </script>
 	<h3>Data</h3>
 	<div id="data">
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Game</th>
+        <th>Time</th>
+        <th>File</th>
+      </tr>
+      {% for gd in game_data %}
+      <tr>
+        <td>{{gd.user}}</td>
+        <td>{{gd.game}}</td>
+        <td>{{gd.time}}</td>
+        <td>
+          <a href="{{gd.data}}" download="{{gd.user}}_game{{gd.game}}_{{gd.time}}.csv">{{gd.user}}_game{{gd.game}}_{{gd.time}}.csv/a> 
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
   </div>
 {% endblock %}
