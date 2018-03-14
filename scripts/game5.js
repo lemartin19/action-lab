@@ -7,7 +7,7 @@ var trial = 0, points = 0;
 var stage = 0, timer = 0, w = 0, net_offset = 0;
 var start = 0, date = 0;
 
-var csvContent = "data:text/csv;charset=utf-8,"; //string to become output csv
+var xml = "<query><data>data:text/plain;charset=utf-8,"; //string to become output csv
 
 var RANDOMTABLE = [0,0,0,2,2,2,2,1,2,1,0,1,0,0,0,1,2,1,1,2,2,2,2,0,0,0,2,0,1,1,0,2,1,0,1,1,2,2,1,2,0,0,0,1,2,0,2,0,2,2,1,1,2,0,1,2,2,2,1,1,1,2,2,2,1,2,0,1,0,1,2,1,0,1,0,1,0,0,1,1];
 
@@ -96,10 +96,9 @@ function score(img) {
 
 //download csv file
 function downloadData() {
-	var encodedUri = encodeURI(csvContent);
-	var link = doc.createElement("a");
-	link.setAttribute("href", encodedUri);
-	link.setAttribute("download", "game1_data.csv");
-	document.body.appendChild(link); // Required for FF
-	link.click();
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST","/data");
+  xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+  xml += "</data><game>1</game><trials>" + trial + "</trials><points>" + points + "</points></query>";
+  xmlhttp.send(xml);
 }

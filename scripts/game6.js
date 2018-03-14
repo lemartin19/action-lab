@@ -6,6 +6,8 @@ var is_setup = 0, ballv = 0, movement = 0, trial = 0, points = 0;
 var vx = [3.5,4,4.5,5], vy = [-3.25,-3.714,-4.179,-4.643], ay  = [.03,.0392,.0496];
 var velx = 0, vely = 0, accely = 0, locx = 0, locy = 0;
 
+var xml = "<query><data>data:text/plain;charset=utf-8,"; //string to become output csv
+
 var success = new Audio("../sounds/success.mp3");
 var fail = new Audio("../sounds/fail.mp3");
 
@@ -90,4 +92,13 @@ function score() {
     doc.getElementById('game_field').appendChild(newElement);
     points++;
   }
+}
+
+//download csv file
+function downloadData() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST","/data");
+  xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+  xml += "</data><game>1</game><trials>" + trial + "</trials><points>" + points + "</points></query>";
+  xmlhttp.send(xml);
 }

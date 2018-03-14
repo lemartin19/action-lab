@@ -12,7 +12,7 @@ var xv, yv;
 var xpos, ypos, xvel, yvel, yacc, wall_width;
 var wall_state = [14, 17, 20];
 
-var csvContent = "data:text/csv;charset=utf-8,";
+var xml = "<query><data>data:text/plain;charset=utf-8,"; //string to become output csv
 
 var success = new Audio("../sounds/success.mp3");
 var fail = new Audio("../sounds/fail.mp3");
@@ -37,7 +37,7 @@ function frame() {
 	checkY = field_dimensions.top + ypos + ball.offsetHeight/2;
 
 	//add ball center and net center string to give location
-	csvContent += checkX.toString() + ", " + checkY.toString() + ", " + (netBounds.right-netBounds.width/2).toString() + ", " + (netBounds.bottom-netBounds.height/2).toString() + "\n"; 
+	xml += checkX.toString() + ", " + checkY.toString() + ", " + (netBounds.right-netBounds.width/2).toString() + ", " + (netBounds.bottom-netBounds.height/2).toString() + "\n"; 
 
 	if (checkY>field_dimensions.bottom) { 		//if the ball is outside the game field
 		fail.currentTime = 0;
@@ -82,10 +82,11 @@ function throwBall() {
 		trial++;
 		id = setInterval(frame, 5);
 
-		csvContent += "xvel:," + xvel + "\nyvel:," + yvel + "\nyacc:," + yacc + "\nwall_width:," + .01*wall_width*field_dimensions.width + "\n";
-		csvContent += "Ball X, Ball Y, Mouse X, Mouse Y\n";
+		xml += "xvel:," + xvel + "\nyvel:," + yvel + "\nyacc:," + yacc + "\nwall_width:," + .01*wall_width*field_dimensions.width + "\n";
+		xml += "Ball X, Ball Y, Mouse X, Mouse Y\n";
 	}
 	else if (trial >= 15) {
+    downloadData();
 		var link = doc.createElement('a');
 		link.setAttribute('href', '/game_finished' + points);
 		document.body.appendChild(link); // Required for FF
@@ -133,18 +134,17 @@ function reset() {
 		paras[0].parentNode.removeChild(paras[0]);
 	}
 	setup();
-	csvContent = "data:text/csv;charset=utf-8,";
-	csvContent += "Ball X, Ball Y, Mouse X, Mouse Y\n";
+	xml = "<query><data>data:text/plain;charset=utf-8,"; //string to become output csv
+	xml += "Ball X, Ball Y, Mouse X, Mouse Y\n";
 	trial = 0;
 	points = 0;
 }
 
 //download csv file
 function downloadData() {
-	var encodedUri = encodeURI(csvContent);
-	var link = doc.createElement("a");
-	link.setAttribute("href", encodedUri);
-	link.setAttribute("download", "game2_data.csv");
-	document.body.appendChild(link); // Required for FF
-	link.click();
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST","/data");
+  xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+  xml += "</data><game>1</game><trials>" + trial + "</trials><points>" + points + "</points></query>";
+  xmlhttp.send(xml);
 }

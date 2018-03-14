@@ -13,7 +13,7 @@ var RANDOMTABLE = [0,0,0,2,2,2,2,1,2,1,0,1,0,0,0,1,2,1,1,2,2,2,2,0,0,0,2,0,1,1,0
 var xv, yv;
 var xpos, ypos, xvel, yvel, yacc;
 
-var csvContent = "data:text/csv;charset=utf-8,"; //string to become output csv
+var xml = "<query><data>data:text/plain;charset=utf-8,"; //string to become output csv
 
 var success = new Audio("../sounds/success.mp3");
 var fail = new Audio("../sounds/fail.mp3");
@@ -45,7 +45,7 @@ function frame() {
   mousevel = ((paddleBounds.top + paddleBounds.height/2)-mouseY)/5;   //calculate change in mouse position from previous frame
 
                   //add ball center and paddle center string to give location
-  csvContent += checkX.toString() + ", " + checkY.toString() + ", " + (paddleBounds.left+paddleBounds.width/2).toString() + ", " + (paddleBounds.top+paddleBounds.height/2).toString() + "\n";// + ", " + yvel + "\n"; 
+  xml += checkX.toString() + ", " + checkY.toString() + ", " + (paddleBounds.left+paddleBounds.width/2).toString() + ", " + (paddleBounds.top+paddleBounds.height/2).toString() + "\n";// + ", " + yvel + "\n"; 
   
   if (checkY > field_dimensions.bottom || checkY < 0 || checkX > field_dimensions.right) {//if the ball is outside the game field
     fail.currentTime = 0;
@@ -64,8 +64,6 @@ function frame() {
       checkX<1095 &&
       ballY_old>(2*ballX_old-1786) &&
       checkY<(2*checkX-1786)) {
-      console.log(checkY);
-      console.log(1.75*checkX-1597.5);
       score();        //draw point
       success.currentTime = 0;
       success.play();       //play success sound
@@ -86,8 +84,6 @@ function frame() {
 
 //draw's paddle every time the mouse is moved
 function drawPaddle(e) {
-  /*console.log(e.clientY);
-  console.log(e.clientX);*/
   if(!mouseY) {
     mouseY = e.clientY;
   }
@@ -101,8 +97,8 @@ function throwBall(e) {
   curDate = new Date();
   paddleBounds = paddle.getBoundingClientRect();
 
-  csvContent += "xvel:, " + xvel + "\nyvel:, " + yvel + "\nyacc:, " + yacc + "\n";
-  csvContent += "Ball X, Ball Y, Mouse X, Mouse Y\n";
+  xml += "\nxvel:, " + xvel + "\nyvel:, " + yvel + "\nyacc:, " + yacc + "\n";
+  xml += "Ball X, Ball Y, Mouse X, Mouse Y\n";
 
   //checks if animation is already running, if there have been more than 15 trials,
   //if the paddle starts in the box, or if there has been enough time since last throw
@@ -111,6 +107,7 @@ function throwBall(e) {
     id = setInterval(frame, 5);
   }
   else if (trial >= 15) {
+    downloadData();
     var link = doc.createElement('a');
     link.setAttribute('href', '/game_finished' + points);
     document.body.appendChild(link); // Required for FF
@@ -161,18 +158,16 @@ function reset() {
     paras[0].parentNode.removeChild(paras[0]);
   }
   setup();
-  csvContent = "data:text/csv;charset=utf-8,";
-  csvContent += "Ball X, Ball Y, Mouse X, Mouse Y\n";
+  xml = "<query><data>data:text/plain;charset=utf-8,"; //string to become output csv
   trial = 0;
   points = 0;
 }
 
 //download csv file
 function downloadData() {
-  var encodedUri = encodeURI(csvContent);
-  var link = doc.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "game3_data.csv");
-  document.body.appendChild(link); // Required for FF
-  link.click();
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST","/data");
+  xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+  xml += "</data><game>3</game><trials>" + trial + "</trials><points>" + points + "</points></query>";
+  xmlhttp.send(xml);
 }
