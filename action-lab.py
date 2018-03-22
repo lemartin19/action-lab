@@ -156,10 +156,6 @@ class AddUser(webapp2.RequestHandler):
       update_values(message="User added")
       logging.info("here")
       time.sleep(0.2)
-
-    persons = User.all()
-    for p in persons:
-      logging.info(p.first_name)
     self.write_form(**values)
   
   def write_form(self, **template_values):
@@ -190,18 +186,26 @@ class AdminLogin(webapp2.RequestHandler):
     self.response.write(template.render(title="Admin Login", user=self.request.cookies.get("user"), admin=self.request.cookies.get("admin"), **template_values))
     
 class Data(webapp2.RequestHandler):
-  def get(self):
+  def get(self, user, game):
     logging.info("**** Data Get ****")
     if not check_admin(self.request.cookies.get('admin')):
       self.response.headers.add_header('Set-Cookie', 'error="You are not authorized to view this page. Please login as an admin."; Path=/')
       self.response.headers.add_header('Set-Cookie', 'admin=""; Expires=%s' % (datetime.datetime.now() + datetime.timedelta(-1)))
       self.redirect('/error')
     game_data = GameData.all()
-    game_data.order('-user')
+    logging.info(user)
+    if user:
+      user = int(user)
+      game_data.filter('user =', user)
+    logging.info(game)
+    if game:
+      game = int(game)
+      game_data.filter('game =', game)
+    game_data.order('-time')
     template = JINJA_ENVIRONMENT.get_template('templates/data.html')
     self.response.write(template.render(title="Data", user=self.request.cookies.get("user"), admin=self.request.cookies.get("admin"), game_data=game_data))
 
-  def post(self):
+  def post(self, user, game):
     logging.info("**** Data post ****")
     if not (check_admin(self.request.cookies.get("admin")) or check_user(self.request.cookies.get("user"))):
       self.response.headers.add_header('Set-Cookie','error="You must login as either an admin or user in order to continue to this site."; Path=/')
@@ -368,7 +372,7 @@ application = webapp2.WSGIApplication([
   ('/about', About),
   ('/add', AddUser),
   ('/admin', AdminLogin),
-  ('/data', Data),
+  ('/data(?:\?user=(\d+)?&game=([1-6])?)?$', Data),
   ('/error', Error),
   ('/files', Files),
   ('/game([1-6])', Game),
