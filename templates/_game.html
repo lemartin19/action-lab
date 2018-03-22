@@ -17,6 +17,10 @@
 		<script type='text/javascript'>
 			declareVariables();
 			setup();
+      window.onbeforeunload = function() {
+          return true;
+      };
+      window.addEventListener('unload', downloadData);
 		</script>
 		<p style="position: fixed; top: 700px;">
 			<button onclick="reset()">Reset</button>&emsp;

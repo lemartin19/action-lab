@@ -87,6 +87,7 @@ function throwBall() {
 	}
 	else if (trial >= 15) {
     downloadData();
+    window.onbeforeunload = null;
 		var link = doc.createElement('a');
 		link.setAttribute('href', '/game_finished' + points);
 		document.body.appendChild(link); // Required for FF
@@ -145,6 +146,6 @@ function downloadData() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open("POST","/data");
   xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-  xml += "</data><game>1</game><trials>" + trial + "</trials><points>" + points + "</points></query>";
+  xml += "</data><game>2</game><trials>" + trial + "</trials><points>" + points + "</points></query>";
   xmlhttp.send(xml);
 }

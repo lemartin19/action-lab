@@ -86,10 +86,11 @@ function throwBall() {
 		xml += "Ball X, Ball Y, Mouse X, Mouse Y\n";
 	}
 	else if (trial >= 15) {
+    window.onbeforeunload = null;
     downloadData();
     var link = doc.createElement('a');
     link.setAttribute('href', '/game_finished' + points);
-    document.body.appendChild(link); // Required for FF
+    doc.body.appendChild(link);
     link.click();
   }
 }
@@ -141,8 +142,8 @@ function reset() {
 //download csv file
 function downloadData() {
   var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("POST","/data");
+  xmlhttp.open("POST","/data/usergame");
   xmlhttp.setRequestHeader('Content-Type', 'text/xml');
-  xml += "</data><game>2</game><trials>" + trial + "</trials><points>" + points + "</points></query>";
+  xml += "</data><game>1</game><trials>" + trial + "</trials><points>" + points + "</points></query>";
   xmlhttp.send(xml);
 }
